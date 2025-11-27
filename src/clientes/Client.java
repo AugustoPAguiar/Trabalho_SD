@@ -31,7 +31,16 @@ public class Client implements Runnable {
             String msg;
             while ((msg = in.readLine()) != null) {
                 final String mensagemFinal = msg; // cria cópia final para lambda
-
+                
+                if (msg.equalsIgnoreCase("\\SAIR_OK")) {
+                    // Fecha o formulário
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        form.dispose();
+                    });
+                    System.exit(0);
+                    return;
+                }
+                
                 javax.swing.SwingUtilities.invokeLater(() -> {
                     if (mensagemFinal.startsWith("LISTA:")) {
                         // extrair lista de nicknames

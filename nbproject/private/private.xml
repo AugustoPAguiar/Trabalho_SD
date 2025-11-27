@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/augus/OneDrive/Documentos/NetBeansProjects/Trabalho_SD/src/clientes/Client.java</file>
+            <file>file:/C:/Users/augus/OneDrive/Documentos/NetBeansProjects/Trabalho_SD/src/servidor/Server.java</file>
+            <file>file:/C:/Users/augus/OneDrive/Documentos/NetBeansProjects/Trabalho_SD/src/servidor/Server_FixedThreadPool.java</file>
+            <file>file:/C:/Users/augus/OneDrive/Documentos/NetBeansProjects/Trabalho_SD/src/formularios/MainForm.java</file>
+            <file>file:/C:/Users/augus/OneDrive/Documentos/NetBeansProjects/Trabalho_SD/src/formularios/LoginForm.java</file>
+        </group>
     </open-files>
 </project-private>

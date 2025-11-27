@@ -76,9 +76,16 @@ public class Server_FixedThreadPool implements Runnable{
             
             String mensagemDoEstudante;
             
+            
+            broadcastMessage("USER ["+ nickname +"] Entrou na Sala. . .");
+            
+            
             while((mensagemDoEstudante = in.readLine()) != null){
                 
                 if (mensagemDoEstudante.equalsIgnoreCase("\\SAIR")) {
+                    
+                    out.println("\\SAIR_OK");
+                    
                     System.out.println("Aluno " + nickname + " saiu da reunião.");
 
                     // Remove da lista de alunos
@@ -123,7 +130,7 @@ public class Server_FixedThreadPool implements Runnable{
         } catch (IOException ex) {
             System.out.println("Erro de comnunicacao com o cliente ["+ nickname +"]");
             listaAlunos.remove(this);
-            broadcastMessage("* * * ["+ nickname +"] saiu por erros de comunicação com o Servidor . . .");
+            broadcastMessage("* * * ["+ nickname +"] Saiu - Erro de Comunicação com o Servidor . . .");
         }    
         
     }
