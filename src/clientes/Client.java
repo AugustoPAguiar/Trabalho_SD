@@ -13,6 +13,7 @@ import java.io.IOException;
 public class Client implements Runnable {
 
     private BufferedReader in;
+   
     private MainForm form;
 
     public Client(BufferedReader in, MainForm form) {
@@ -29,8 +30,17 @@ public class Client implements Runnable {
         try {
             String msg;
             while ((msg = in.readLine()) != null) {
-                final String mensagemFinal = msg; // cria cópia final
-                javax.swing.SwingUtilities.invokeLater(() -> {form.appendMessage(mensagemFinal);});
+                final String mensagemFinal = msg; // cria cópia final para lambda
+
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    if (mensagemFinal.startsWith("LISTA:")) {
+                        // extrair lista de nicknames
+                        String[] nomes = mensagemFinal.substring(6).split(";");
+                        form.updateNicknameList(nomes);
+                    } else {
+                        form.appendMessage(mensagemFinal);
+                    }
+                });
             }
         } catch (IOException e) {
             System.out.println("Erro ao ler mensagens: " + e.getMessage());

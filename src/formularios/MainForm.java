@@ -103,6 +103,18 @@ public class MainForm extends javax.swing.JFrame {
         
     }
     
+    public void updateNicknameList(String[] nomes) {
+        DefaultListModel<String> model = new DefaultListModel<>();
+
+        for (String nome : nomes) {
+            if (!nome.isEmpty())
+                model.addElement(nome);
+        }
+
+        jList_nicknames.setModel(model);
+    }
+
+    
     /**
      * Envia mensagens do cliente - utilizador - para o servidor
      */

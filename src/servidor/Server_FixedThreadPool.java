@@ -61,6 +61,7 @@ public class Server_FixedThreadPool implements Runnable{
             System.out.println("Aluno " + nickname + " entrou na reuniao");
             
             listaAlunos.add(this);
+            atualizarListaAlunos();
             
             String menu = "\n ********* BEM VINDO AO SD_TEAMS *********\n"
                     + "* Pode conversar com os outros membros da reuniao *\n"
@@ -103,6 +104,19 @@ public class Server_FixedThreadPool implements Runnable{
         
         
     }
+    
+    private void atualizarListaAlunos() {
+        StringBuilder lista = new StringBuilder("LISTA:");
+
+        synchronized(listaAlunos) {
+            for (Server_FixedThreadPool aluno : listaAlunos) {
+                lista.append(aluno.nickname).append(";");
+            }
+        }
+
+        broadcastMessage(lista.toString());
+    }
+
 
     private void broadcastMessage(String msg) {
     synchronized(listaAlunos) {
