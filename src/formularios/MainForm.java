@@ -104,15 +104,15 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     public void updateNicknameList(String[] nomes) {
-        DefaultListModel<String> model = new DefaultListModel<>();
-
+        DefaultListModel<String> model = (DefaultListModel<String>) jList_nicknames.getModel();
         for (String nome : nomes) {
-            if (!nome.isEmpty())
+            if (nome != null && !nome.isEmpty() && !model.contains(nome)) {
                 model.addElement(nome);
+            }
         }
-
-        jList_nicknames.setModel(model);
     }
+
+
 
     
     /**

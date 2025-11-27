@@ -62,6 +62,8 @@ public class Server_FixedThreadPool implements Runnable{
             
             listaAlunos.add(this);
             atualizarListaAlunos();
+            sendCurrentUserListToNewClient();
+            broadcastNewUser(this.nickname);
             
             String menu = "\n ********* BEM VINDO AO SD_TEAMS *********\n"
                     + "* Pode conversar com os outros membros da reuniao *\n"
@@ -84,7 +86,7 @@ public class Server_FixedThreadPool implements Runnable{
                 if(mensagemDoEstudante.startsWith("@")){
                     // testar se o index é válido
                     if(indexEspaco != -1){
-                        String nicknameDestinatario = mensagemDoEstudante.substring(1, indexEspaco - 1);
+                        String nicknameDestinatario = mensagemDoEstudante.substring(1, indexEspaco);
                         
                         String mensagemPrivada = mensagemDoEstudante.substring(indexEspaco + 1);
                     
@@ -100,9 +102,30 @@ public class Server_FixedThreadPool implements Runnable{
             
         } catch (IOException ex) {
             System.out.println("Erro de comnunicacao com o cliente");
+        }    
+        
+    }
+    
+    private void sendCurrentUserListToNewClient() {
+        StringBuilder lista = new StringBuilder("LISTA:");
+
+        synchronized(listaAlunos) {
+            for (Server_FixedThreadPool aluno : listaAlunos) {
+                lista.append(aluno.nickname).append(";");
+            }
         }
-        
-        
+
+        out.println(lista.toString()); // envia somente para o novo cliente
+    }
+
+    private void broadcastNewUser(String nickname) {
+        synchronized(listaAlunos) {
+            for (Server_FixedThreadPool aluno : listaAlunos) {
+                if (!aluno.equals(this)) { // não envia para o próprio novo cliente
+                    aluno.out.println("LISTA:" + nickname + ";");
+                }
+            }
+        }
     }
     
     private void atualizarListaAlunos() {
