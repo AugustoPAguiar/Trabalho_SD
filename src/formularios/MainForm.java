@@ -131,9 +131,14 @@ public class MainForm extends javax.swing.JFrame {
      * Lê mensagens do servidor numa thread separada por cada cliente e imprime na consola
      */
     private void readMessage(){
-        Thread t = new Thread(new Client(in));
+        Thread t = new Thread(new Client(in, this));
         t.start();
     }
+    
+    public void appendMessage(String msg) {
+        jTextArea_conversas.append(msg + "\n");
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

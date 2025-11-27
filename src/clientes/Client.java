@@ -1,5 +1,6 @@
 package clientes;
  
+import formularios.MainForm;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -9,36 +10,31 @@ import java.io.IOException;
  * para todos os clientes ligados, mediante alguma
  * regras
  */
-public class Client implements Runnable{
-    private BufferedReader in;
+public class Client implements Runnable {
 
-    
-    public Client(BufferedReader in) {
+    private BufferedReader in;
+    private MainForm form;
+
+    public Client(BufferedReader in, MainForm form) {
         this.in = in;
+        this.form = form;
     }
 
     @Override
     public void run() {
-        readMessageFrmServer(in);
+        readMessageFrmServer();
     }
 
-    
-   /**
- * Le as linhas de texto que estao a ser recebidas DO servidor
- * @param in BufferedReader
- */
-    private void readMessageFrmServer(BufferedReader in) {
-        String msgDoServidor;
-        
+    private void readMessageFrmServer() {
         try {
-            //enquanto não for lido todo o texto do buffer
-            while ((msgDoServidor = in.readLine())!=null) {                
-                System.out.println(msgDoServidor);
+            String msg;
+            while ((msg = in.readLine()) != null) {
+                final String mensagemFinal = msg; // cria cópia final
+                javax.swing.SwingUtilities.invokeLater(() -> {form.appendMessage(mensagemFinal);});
             }
         } catch (IOException e) {
-            System.out.println("Erro na leitura de mensagens do "
-                    + "servidor: " + e.getMessage());
+            System.out.println("Erro ao ler mensagens: " + e.getMessage());
         }
     }
-    
 }
+
