@@ -70,7 +70,7 @@ public class MainForm extends javax.swing.JFrame {
             listModel.addElement(nickname);
             jList_nicknames.setModel(listModel);
      
-//         readMessage();
+            readMessage();
 //         
 //         sendMessage();
          
@@ -254,7 +254,15 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EnviarActionPerformed
-        // TODO add your handling code here:
+        String msg = jTextArea_mensagem.getText().trim();
+    
+        if (msg.isEmpty()) return;
+
+        // Envia para o servidor
+        out.println(msg);
+
+        // Limpa a caixa de mensagem
+        jTextArea_mensagem.setText("");
     }//GEN-LAST:event_jButton_EnviarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
