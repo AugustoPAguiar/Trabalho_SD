@@ -77,6 +77,26 @@ public class Server_FixedThreadPool implements Runnable{
             String mensagemDoEstudante;
             
             while((mensagemDoEstudante = in.readLine()) != null){
+                
+                if (mensagemDoEstudante.equalsIgnoreCase("\\SAIR")) {
+                    System.out.println("Aluno " + nickname + " saiu da reunião.");
+
+                    // Remove da lista de alunos
+                    synchronized(listaAlunos) {
+                        listaAlunos.remove(this);
+                    }
+                    
+                    broadcastMessage("* * * [" + nickname + "] Saiu da Sala. . .");
+
+                    // Atualiza lista para os outros alunos
+                    atualizarListaAlunos();
+
+                    // Fecha o socket do cliente
+                    clientSocket.close();
+
+                    break;
+                }
+                
                 System.out.println("De [" + nickname.toUpperCase() + "]: " + mensagemDoEstudante);
                       
                 // obtem o index do espaço
@@ -101,7 +121,9 @@ public class Server_FixedThreadPool implements Runnable{
             
             
         } catch (IOException ex) {
-            System.out.println("Erro de comnunicacao com o cliente");
+            System.out.println("Erro de comnunicacao com o cliente ["+ nickname +"]");
+            listaAlunos.remove(this);
+            broadcastMessage("* * * ["+ nickname +"] saiu por erros de comunicação com o Servidor . . .");
         }    
         
     }
